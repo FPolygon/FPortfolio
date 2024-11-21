@@ -308,6 +308,27 @@ const TerminalPortfolio: React.FC = () => {
     </>
   );
 
+  const TechBadges: React.FC<{ technologies: { name: string }[] }> = ({
+    technologies,
+  }) => {
+    return (
+      <div className="flex flex-wrap gap-2">
+        {technologies.map((tech, index) => (
+          <div
+            key={index}
+            className="inline-flex items-center px-3 py-1 rounded border border-purple-500 bg-opacity-20 bg-purple-900 text-purple-300 hover:bg-purple-800 hover:bg-opacity-30 transition-colors cursor-pointer group"
+          >
+            <span className="mr-2 text-emerald-400">$</span>
+            {tech.name}
+            <span className="ml-2 opacity-0 group-hover:opacity-100 text-emerald-400 transition-opacity">
+              _
+            </span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   // Function to fetch projects for a category
   const fetchProjects = async (category: string) => {
     setLoading(true);
@@ -340,29 +361,26 @@ const TerminalPortfolio: React.FC = () => {
     titleColor: string,
   ): JSX.Element => {
     if (error) return <ErrorMessage message={error} />;
-
     if (!projects.length) {
       return <div className="text-gray-300">No projects found.</div>;
     }
-
     return (
       <div className="whitespace-pre-wrap">
         <div className={`${titleColor}`}>
           ━━━ {category.toUpperCase()} Projects ━━━━━━━━━━━━━━━━━━━━━━━
         </div>
-
         {projects.map((project, index) => (
           <div className="mt-4" key={project.id}>
             <div className="text-yellow-400 font-bold">
               {index + 1}. {project.name}
             </div>
-            <div className="text-gray-300">• {project.description}</div>
-
-            <div className="text-green-400">• Technologies:</div>
-            <div className="ml-2 text-gray-300">
-              {project.technology.map((tech) => tech.name).join(", ")}
+            <div className="text-gray-300 leading-relaxed pl-4 border-l-2 border-gray-700 my-2 ml-1">
+              <span className="text-blue-400">❯</span> {project.description}
             </div>
-
+            <div className="text-green-400">• Technologies:</div>
+            <div className="ml-2">
+              <TechBadges technologies={project.technology} />
+            </div>
             <div className="text-cyan-400">• Code:</div>
             <div className="ml-2">
               <ProjectLink href={project.github} />
@@ -372,7 +390,6 @@ const TerminalPortfolio: React.FC = () => {
       </div>
     );
   };
-
   // Command definitions and their implementations
   const commands: Commands = {
     // Each command returns either a string or JSX element
