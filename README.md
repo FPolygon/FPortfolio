@@ -121,7 +121,7 @@ python manage.py runserver
 - [x] Frontend CLI interface
 - [x] Backend API setup
 - [x] Projects app
-- [ ] Skills app
+- [x] Skills app
 - [ ] About app
 - [ ] Contact app
 - [ ] Docker containerization

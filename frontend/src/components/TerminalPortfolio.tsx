@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import AnimatedAsciiArt from "./AnimatedAsciiArt";
-import { Project } from "../types/index"; // if using types/index.ts
-import { fetchProjectsByCategory } from "../api";
+import { Project, Category } from "../types/index";
+import { fetchProjectsByCategory, fetchAllSkills } from "../api";
 
-// Define types for command output (can be string or JSX)
 type CommandOutput = string | JSX.Element;
 
 // Interface for the commands object structure
@@ -38,184 +37,6 @@ const ProjectLink: React.FC<{ href: string }> = ({ href }) => {
     </a>
   );
 };
-
-// Skills section component - displays formatted skill categories
-const skillsSection = (): CommandOutput => (
-  <div className="whitespace-pre-wrap">
-    {/* Infrastructure & Cloud */}
-    <div className="mb-6">
-      <div className="text-blue-500 font-bold mb-2">
-        ━━━ Infrastructure & Cloud ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-      </div>
-      <div className="grid grid-cols-1 gap-1">
-        <div className="flex">
-          <span className="text-purple-400 w-48">Containers & Orch:</span>
-          <span className="text-gray-300">
-            Kubernetes, Docker, Helm, EKS, GKE
-          </span>
-        </div>
-        <div className="flex">
-          <span className="text-purple-400 w-48">Infrastructure as Code:</span>
-          <span className="text-gray-300">
-            Terraform, AWS CDK, CloudFormation
-          </span>
-        </div>
-        <div className="flex">
-          <span className="text-purple-400 w-48">Cloud Platforms:</span>
-          <span className="text-gray-300">AWS, GCP</span>
-        </div>
-        <div className="flex">
-          <span className="text-purple-400 w-48">Service Mesh:</span>
-          <span className="text-gray-300">Istio, Consul</span>
-        </div>
-        <div className="flex">
-          <span className="text-purple-400 w-48">Monitoring:</span>
-          <span className="text-gray-300">Prometheus, Grafana, ELK Stack</span>
-        </div>
-        <div className="flex">
-          <span className="text-purple-400 w-48">Security:</span>
-          <span className="text-gray-300">
-            HashiCorp Vault, Cert-Manager, AWS IAM
-          </span>
-        </div>
-      </div>
-    </div>
-
-    {/* MLOps & Model Deployment */}
-    <div className="mb-6">
-      <div className="text-green-500 font-bold mb-2">
-        ━━━ MLOps & Model Deployment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-      </div>
-      <div className="grid grid-cols-1 gap-1">
-        <div className="flex">
-          <span className="text-cyan-400 w-48">ML Platforms:</span>
-          <span className="text-gray-300">Kubeflow, MLflow, Seldon Core</span>
-        </div>
-        <div className="flex">
-          <span className="text-cyan-400 w-48">Feature Stores:</span>
-          <span className="text-gray-300">Feast, Redis</span>
-        </div>
-        <div className="flex">
-          <span className="text-cyan-400 w-48">Model Serving:</span>
-          <span className="text-gray-300">TensorFlow Serving, TorchServe</span>
-        </div>
-        <div className="flex">
-          <span className="text-cyan-400 w-48">Experiment Tracking:</span>
-          <span className="text-gray-300">MLflow, Weights & Biases</span>
-        </div>
-        <div className="flex">
-          <span className="text-cyan-400 w-48">Model Monitoring:</span>
-          <span className="text-gray-300">Prometheus, Grafana</span>
-        </div>
-        <div className="flex">
-          <span className="text-cyan-400 w-48">Data Version Control:</span>
-          <span className="text-gray-300">DVC, Git LFS</span>
-        </div>
-      </div>
-    </div>
-
-    {/* Data Engineering */}
-    <div className="mb-6">
-      <div className="text-yellow-500 font-bold mb-2">
-        ━━━ Data Engineering ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-      </div>
-      <div className="grid grid-cols-1 gap-1">
-        <div className="flex">
-          <span className="text-orange-400 w-48">Stream Processing:</span>
-          <span className="text-gray-300">Apache Kafka, Spark Streaming</span>
-        </div>
-        <div className="flex">
-          <span className="text-orange-400 w-48">Data Pipelines:</span>
-          <span className="text-gray-300">Apache Airflow, dbt</span>
-        </div>
-        <div className="flex">
-          <span className="text-orange-400 w-48">Data Storage:</span>
-          <span className="text-gray-300">S3, Delta Lake, Apache Hudi</span>
-        </div>
-        <div className="flex">
-          <span className="text-orange-400 w-48">Databases:</span>
-          <span className="text-gray-300">PostgreSQL, MongoDB, Redis</span>
-        </div>
-        <div className="flex">
-          <span className="text-orange-400 w-48">ETL/ELT Tools:</span>
-          <span className="text-gray-300">Apache Spark, dbt</span>
-        </div>
-        <div className="flex">
-          <span className="text-orange-400 w-48">Data Formats:</span>
-          <span className="text-gray-300">Parquet, Avro, JSON</span>
-        </div>
-      </div>
-    </div>
-
-    {/* Machine Learning */}
-    <div className="mb-6">
-      <div className="text-red-500 font-bold mb-2">
-        ━━━ Machine Learning ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-      </div>
-      <div className="grid grid-cols-1 gap-1">
-        <div className="flex">
-          <span className="text-pink-400 w-48">Frameworks:</span>
-          <span className="text-gray-300">
-            PyTorch, TensorFlow, scikit-learn
-          </span>
-        </div>
-        <div className="flex">
-          <span className="text-pink-400 w-48">NLP:</span>
-          <span className="text-gray-300">Transformers, spaCy, NLTK</span>
-        </div>
-        <div className="flex">
-          <span className="text-pink-400 w-48">Time Series:</span>
-          <span className="text-gray-300">Prophet, statsmodels</span>
-        </div>
-        <div className="flex">
-          <span className="text-pink-400 w-48">Deep Learning:</span>
-          <span className="text-gray-300">CNN, RNN, Transformers</span>
-        </div>
-        <div className="flex">
-          <span className="text-pink-400 w-48">ML Libraries:</span>
-          <span className="text-gray-300">NumPy, Pandas, SciPy</span>
-        </div>
-        <div className="flex">
-          <span className="text-pink-400 w-48">Visualization:</span>
-          <span className="text-gray-300">Matplotlib, Seaborn</span>
-        </div>
-      </div>
-    </div>
-
-    {/* Programming & Tools */}
-    <div className="mb-6">
-      <div className="text-purple-500 font-bold mb-2">
-        ━━━ Programming & Tools ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-      </div>
-      <div className="grid grid-cols-1 gap-1">
-        <div className="flex">
-          <span className="text-indigo-400 w-48">Languages:</span>
-          <span className="text-gray-300">Python, Go, Bash, SQL</span>
-        </div>
-        <div className="flex">
-          <span className="text-indigo-400 w-48">CI/CD:</span>
-          <span className="text-gray-300">GitHub Actions, Jenkins, ArgoCD</span>
-        </div>
-        <div className="flex">
-          <span className="text-indigo-400 w-48">Version Control:</span>
-          <span className="text-gray-300">Git, GitHub</span>
-        </div>
-        <div className="flex">
-          <span className="text-indigo-400 w-48">API Development:</span>
-          <span className="text-gray-300">FastAPI, Flask</span>
-        </div>
-        <div className="flex">
-          <span className="text-indigo-400 w-48">Testing:</span>
-          <span className="text-gray-300">pytest, unittest</span>
-        </div>
-        <div className="flex">
-          <span className="text-indigo-400 w-48">Documentation:</span>
-          <span className="text-gray-300">Sphinx, MkDocs</span>
-        </div>
-      </div>
-    </div>
-  </div>
-);
 
 // Contact section component
 const contactSection = (): CommandOutput => (
@@ -281,6 +102,7 @@ const TerminalPortfolio: React.FC = () => {
   }>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [skillsData, setSkillsData] = useState<Category[]>([]);
 
   // Refs for DOM manipulation
   const inputRef = useRef<HTMLInputElement>(null); // Reference to input element
@@ -390,6 +212,70 @@ const TerminalPortfolio: React.FC = () => {
       </div>
     );
   };
+  const SkillsSection: React.FC<{ data: Category[] }> = ({ data }) => {
+    if (data.length === 0) {
+      return <div>No skills data available.</div>;
+    }
+
+    const categoryColors: { [key: string]: { header: string; label: string } } =
+      {
+        "Infrastructure & Cloud": {
+          header: "text-blue-500",
+          label: "text-purple-400",
+        },
+        "MLOps & Model Deployment": {
+          header: "text-green-500",
+          label: "text-cyan-400",
+        },
+        "Data Engineering & Pipeline": {
+          header: "text-yellow-500",
+          label: "text-orange-400",
+        },
+        "Machine Learning & AI": {
+          header: "text-red-500",
+          label: "text-pink-400",
+        },
+        "Programming & Tools": {
+          header: "text-purple-500",
+          label: "text-indigo-400",
+        },
+      };
+
+    return (
+      <div className="whitespace-pre-wrap">
+        {data.map((category) => (
+          <div key={category.id} className="mb-6">
+            <div
+              className={`${
+                categoryColors[category.name]?.header || "text-gray-500"
+              } font-bold mb-2`}
+            >
+              ━━━ {category.name} ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            </div>
+            <div className="grid grid-cols-1 gap-1">
+              {category.subcategories.map((subcategory) => (
+                <div key={subcategory.id} className="flex">
+                  <span
+                    className={`${
+                      categoryColors[category.name]?.label || "text-gray-400"
+                    } w-48`}
+                  >
+                    {subcategory.name}:
+                  </span>
+                  <span className="text-gray-300">
+                    {subcategory.technologies
+                      .map((tech) => tech.name)
+                      .join(", ")}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   // Command definitions and their implementations
   const commands: Commands = {
     // Each command returns either a string or JSX element
@@ -402,8 +288,13 @@ const TerminalPortfolio: React.FC = () => {
     about: (): CommandOutput => `Hi! I'm Francis Pagulayan
 A passionate infrastrucure and automation engineer with a love for creating elegant solutions.
 Currently based in Chicago IL.`,
-    skills: skillsSection,
-    projects: (): CommandOutput /* Projects component implementation */ => (
+    skills: async () => {
+      const data = await fetchAllSkills();
+      setSkillsData(data); // Update state for future use
+      return <SkillsSection data={data} />; // Use the fetched data directly
+    },
+
+    projects: (): CommandOutput => (
       <div className="whitespace-pre-wrap">
         <div className="text-blue-500">
           ━━━ Project Categories

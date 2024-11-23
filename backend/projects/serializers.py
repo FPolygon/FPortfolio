@@ -1,24 +1,32 @@
 from rest_framework import serializers
-
-from .models import Category, Project, Technology
-
-
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = ["id", "name"]
+from .models import Category, Subcategory, Project, Technology
 
 
 class TechnologySerializer(serializers.ModelSerializer):
     class Meta:
         model = Technology
-        fields = ["id", "name"]
+        fields = ["id", "name", "subcategory"]
+
+
+class SubcategorySerializer(serializers.ModelSerializer):
+    technologies = TechnologySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Subcategory
+        fields = ["id", "name", "category", "technologies"]
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    subcategories = SubcategorySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Category
+        fields = ["id", "name", "subcategories"]
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(many=True, read_only=True)
     technology = TechnologySerializer(many=True, read_only=True)
 
     class Meta:
         model = Project
-        fields = ["id", "name", "description", "category", "technology", "github"]
+        fields = ["id", "name", "description", "technology", "github"]
