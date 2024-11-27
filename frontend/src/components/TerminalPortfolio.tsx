@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import AnimatedAsciiArt from "./AnimatedAsciiArt";
-import { Project, Category } from "../types/index";
-import { fetchProjectsByCategory, fetchAllSkills } from "../api";
+import { Project, Category, Job } from "../types";
+import { fetchProjectsByCategory, fetchAllSkills, fetchJobs } from "../api";
 
 type CommandOutput = string | JSX.Element;
 
@@ -9,131 +9,74 @@ type CommandOutput = string | JSX.Element;
 interface Commands {
   [key: string]: () => CommandOutput | Promise<CommandOutput>;
 }
-type Achievement = {
-  text: string;
-  highlights: {
-    word: string;
-    type: "tech" | "metric" | "tool" | "skill";
-  }[];
-};
 
-type WorkHistoryItem = {
-  period: string;
-  role: string;
-  company: string;
-  achievements: Achievement[];
-};
+const WorkHistorySection: React.FC<{ jobs: Job[] }> = ({ jobs }) => {
+  if (!jobs.length) {
+    return <div className="text-gray-400">Loading work history...</div>;
+  }
 
-const HighlightedText: React.FC<{
-  text: string;
-  highlights: Achievement["highlights"];
-}> = ({ text, highlights }) => {
-  let result = text;
-  const spans: JSX.Element[] = [];
-  let lastIndex = 0;
-
-  // Sort highlights by their position in the text to handle overlapping terms
-  const sortedHighlights = [...highlights].sort(
-    (a, b) => text.indexOf(a.word) - text.indexOf(b.word),
+  return (
+    <div className="mb-6">
+      <div className="text-emerald-400 font-bold mb-2">
+        ━━━ WORK HISTORY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      </div>
+      {jobs.map((job, index) => (
+        <div key={index} className="mb-4 group">
+          <div className="flex items-center space-x-2">
+            <span className="text-emerald-400">❯</span>
+            <span className="text-emerald-300 font-bold">
+              {new Date(job.start_date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+              })}{" "}
+              -
+              {job.is_current
+                ? "Present"
+                : job.end_date
+                ? new Date(job.end_date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                  })
+                : ""}
+            </span>
+            <span className="text-gray-400">|</span>
+            <span className="text-gray-200">{job.title}</span>
+            <span className="text-gray-400">@</span>
+            {job.link ? (
+              <a
+                href={job.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:text-blue-300 hover:underline transition-colors"
+              >
+                {job.company}
+              </a>
+            ) : (
+              <span className="text-blue-400">{job.company}</span>
+            )}
+          </div>
+          <div className="ml-6 mt-2 space-y-1">
+            {job.achievements.map((achievement, i) => (
+              <div
+                key={i}
+                className="flex items-start space-x-2 group-hover:text-gray-300 text-gray-400 transition-colors"
+              >
+                <span className="text-emerald-500 mt-1">$</span>
+                <span>{achievement.description}</span>
+              </div>
+            ))}
+          </div>
+          <div className="ml-6 mt-2">
+            <span className="text-emerald-500">Technologies: </span>
+            <span className="text-gray-300">
+              {job.technologies.map((tech) => tech.name).join(", ")}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
   );
-
-  sortedHighlights.forEach((highlight, index) => {
-    const startIndex = result.indexOf(highlight.word);
-    if (startIndex === -1) return;
-
-    // Add text before the highlight
-    spans.push(
-      <span key={`text-${index}`}>
-        {result.substring(lastIndex, startIndex)}
-      </span>,
-    );
-
-    // Add the highlighted word with appropriate styling
-    const highlightClass = {
-      tech: "text-cyan-300 font-semibold",
-      metric: "text-green-300 font-semibold",
-      tool: "text-purple-300 font-semibold",
-      skill: "text-yellow-300 font-semibold",
-    }[highlight.type];
-
-    spans.push(
-      <span
-        key={`highlight-${index}`}
-        className={`${highlightClass} transition-colors duration-300 hover:text-white`}
-      >
-        {highlight.word}
-      </span>,
-    );
-
-    lastIndex = startIndex + highlight.word.length;
-  });
-
-  spans.push(<span key="text-final">{result.substring(lastIndex)}</span>);
-
-  return <>{spans}</>;
 };
-
-const workHistory: WorkHistoryItem[] = [
-  {
-    period: "Jun. 2024 - Present",
-    role: "Desktop Support Engineer",
-    company: "Compass Group",
-    achievements: [
-      {
-        text: "Key contributor to enterprise-wide Windows 11 migration, improving daily successful update rate by over 100% through targeted solutions and script optimization",
-        highlights: [
-          { word: "enterprise-wide Windows 11 migration", type: "skill" },
-          { word: "100%", type: "metric" },
-          { word: "script optimization", type: "tech" },
-        ],
-      },
-      {
-        text: "Developed and maintained PowerShell tools for streamlined troubleshooting, significantly reducing SLA",
-        highlights: [
-          { word: "reducing SLA", type: "metric" },
-          { word: "PowerShell", type: "tool" },
-        ],
-      },
-      {
-        text: "Engineered custom scripts for automated issue resolution, proactively addressing recurring problems identified through trend analysis in SCCM",
-        highlights: [
-          { word: "SCCM", type: "tech" },
-          { word: "custom scripts", type: "tool" },
-          { word: "proactively", type: "skill" },
-        ],
-      },
-    ],
-  },
-  {
-    period: "Jun. 2023 - May 2024",
-    role: "IT Support Specialist",
-    company: "Technology Solutions",
-    achievements: [
-      {
-        text: "Delivered enterprise-level technical support for 47,000+ users, maintaining high resolution rates and customer satisfaction",
-        highlights: [
-          { word: "enterprise-level", type: "skill" },
-          { word: "47,000+", type: "metric" },
-        ],
-      },
-      {
-        text: "Administered core infrastructure services including Active Directory, Google Workspace, and Office 365",
-        highlights: [
-          { word: "Active Directory", type: "tech" },
-          { word: "Google Workspace", type: "tech" },
-          { word: "Office 365", type: "tech" },
-        ],
-      },
-      {
-        text: "Managed virtual machine deployments, server maintenance, and MySQL database access for multiple university departments",
-        highlights: [
-          { word: "virtual machine", type: "tech" },
-          { word: "MySQL", type: "tech" },
-        ],
-      },
-    ],
-  },
-];
 
 // ProjectLink component for rendering external links with an icon
 const ProjectLink: React.FC<{ href: string }> = ({ href }) => {
@@ -228,10 +171,28 @@ const TerminalPortfolio: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [skillsData, setSkillsData] = useState<Category[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
 
   // Refs for DOM manipulation
   const inputRef = useRef<HTMLInputElement>(null); // Reference to input element
   const terminalRef = useRef<HTMLDivElement>(null); // Reference to terminal container
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        const [skillsResponse, jobsResponse] = await Promise.all([
+          fetchAllSkills(),
+          fetchJobs(),
+        ]);
+        setSkillsData(skillsResponse);
+        setJobs(jobsResponse);
+      } catch (error) {
+        setError("Failed to load data");
+      }
+    };
+
+    fetchInitialData();
+  }, []);
 
   // Available commands for auto-completion
   const availableCommands = [
@@ -538,39 +499,7 @@ const TerminalPortfolio: React.FC = () => {
         </div>
 
         {/* Work History Section */}
-        <div className="mb-6">
-          <div className="text-emerald-400 font-bold mb-2">
-            ━━━ WORK HISTORY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          </div>
-          {workHistory.map((job, index) => (
-            <div key={index} className="mb-4 group">
-              <div className="flex items-center space-x-2">
-                <span className="text-emerald-400">❯</span>
-                <span className="text-emerald-300 font-bold">{job.period}</span>
-                <span className="text-gray-400">|</span>
-                <span className="text-gray-200">{job.role}</span>
-                <span className="text-gray-400">@</span>
-                <span className="text-blue-400">{job.company}</span>
-              </div>
-              <div className="ml-6 mt-2 space-y-1">
-                {job.achievements.map((achievement, i) => (
-                  <div
-                    key={i}
-                    className="flex items-start space-x-2 group-hover:text-gray-300 text-gray-400 transition-colors"
-                  >
-                    <span className="text-emerald-500 mt-1">$</span>
-                    <span>
-                      <HighlightedText
-                        text={achievement.text}
-                        highlights={achievement.highlights}
-                      />
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        <WorkHistorySection jobs={jobs} />
 
         {/* Command Suggestions */}
         <div className="text-gray-500 mt-4">

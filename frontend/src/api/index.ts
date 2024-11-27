@@ -1,6 +1,35 @@
-import { Project, Category, Technology, Subcategory } from "../types";
+import { Project, Category, Technology, Subcategory, Job } from "../types";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+
+export const fetchJobs = async (): Promise<Job[]> => {
+  const response = await fetch(`${API_URL}/jobs/`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch jobs");
+  }
+  return response.json();
+};
+
+export const fetchJobsByTechnology = async (
+  technologyId: number,
+): Promise<Job[]> => {
+  const jobs = await fetchJobs();
+  return jobs.filter((job) =>
+    job.technologies.some((tech) => tech.id === technologyId),
+  );
+};
+
+export const fetchJobsByDateRange = async (
+  startDate: string,
+  endDate: string,
+): Promise<Job[]> => {
+  const jobs = await fetchJobs();
+  return jobs.filter(
+    (job) =>
+      new Date(job.start_date) >= new Date(startDate) &&
+      (!job.end_date || new Date(job.end_date) <= new Date(endDate)),
+  );
+};
 
 export const fetchProjects = async (): Promise<Project[]> => {
   const response = await fetch(`${API_URL}/projects/`);
@@ -45,13 +74,11 @@ export const fetchProjectsByCategory = async (
     tools: "Programming & Tools",
   };
 
-  // Fetch all the necessary data
   const [projects, categories] = await Promise.all([
     fetchProjects(),
     fetchCategories(),
   ]);
 
-  // Find the category by name
   const category = categories.find(
     (cat) => cat.name === categoryMap[categoryName],
   );
@@ -60,20 +87,17 @@ export const fetchProjectsByCategory = async (
     return [];
   }
 
-  // Get all technology IDs that belong to this category through its subcategories
   const categoryTechnologyIds = new Set(
     category.subcategories.flatMap((subcategory) =>
       subcategory.technologies.map((tech) => tech.id),
     ),
   );
 
-  // Filter projects that have technologies belonging to this category
   return projects.filter((project) =>
     project.technology.some((tech) => categoryTechnologyIds.has(tech.id)),
   );
 };
 
-// Optional: Helper function to get technologies by category
 export const getTechnologiesByCategory = async (
   categoryName: string,
 ): Promise<Technology[]> => {
@@ -89,7 +113,6 @@ export const getTechnologiesByCategory = async (
   );
 };
 
-// Optional: Helper function to get technologies by subcategory
 export const getTechnologiesBySubcategory = async (
   subcategoryId: number,
 ): Promise<Technology[]> => {
