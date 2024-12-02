@@ -1,9 +1,9 @@
-import { Subcategory, Technology } from '../types';
+import { Subcategory, Technology } from '@/types';
 import { API_URL } from './config';
-import { fetchWithRetry } from '../utils/api';
-import { Cache } from '../utils/cache';
-import { APIError } from '../utils/errors';
-import { validateId } from '../utils/validation';
+import { fetchWithRetry } from '@/utils/api';
+import { Cache } from '@/utils/cache';
+import { APIError } from '@/utils/errors';
+import { validateId } from '@/utils/validation';
 
 // Initialize cache singleton
 const cache = Cache.getInstance();

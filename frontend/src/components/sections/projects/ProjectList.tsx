@@ -1,8 +1,8 @@
 // src/components/sections/projects/ProjectList.tsx
 import React from 'react';
-import { Project } from '../../../types';
-import { ProjectLink } from '../../ui/ProjectLink';
-import { TechBadges } from '../../ui/TechBadges';
+import { Project } from '@/types';
+import { ProjectLink } from '@/components/ui/ProjectLink';
+import { TechBadges } from '@/components/ui/TechBadges';
 
 // Define the props interface for our ProjectList component
 interface ProjectListProps {

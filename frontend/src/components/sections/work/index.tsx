@@ -1,5 +1,5 @@
 import React from 'react';
-import { Job } from '../../../types';
+import { Job } from '@/types';
 import { JobEntry } from './JobEntry';
 
 interface WorkHistorySectionProps {

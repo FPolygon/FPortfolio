@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { TerminalState, TerminalHistoryItem } from '../types/terminal';
-import { MAX_HISTORY_LENGTH, MAX_COMMAND_HISTORY } from '../constants/terminal';
-import { generateId } from '../utils/terminal';
+import { TerminalState, TerminalHistoryItem } from '@/types';
+import { MAX_HISTORY_LENGTH, MAX_COMMAND_HISTORY } from '@/constants/terminal';
+import { generateId } from '@/utils/terminal';
 import { TerminalContext } from './terminalContext';
 
 // Terminal Provider component for managing terminal state and history

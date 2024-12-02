@@ -3,7 +3,7 @@ import { ContactHeader } from './ContactHeader';
 import { ContactItem } from './ContactItem';
 import { ContactFooter } from './ContactFooter';
 import { createContactItems } from './config';
-import type { ContactSectionProps } from '../../../types';
+import type { ContactSectionProps } from '@/types';
 
 // Main contact section component that assembles all sub-components
 // Provides default values for all contact information

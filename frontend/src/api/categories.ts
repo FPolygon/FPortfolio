@@ -1,4 +1,4 @@
-import { Category } from '../types';
+import { Category } from '@/types';
 import { API_URL } from './config';
 
 // Fetch all available categories

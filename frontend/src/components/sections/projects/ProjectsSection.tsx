@@ -1,8 +1,8 @@
 import React from 'react';
 import ProjectCategories from './ProjectCategories';
-import { Project } from '../../../types';
+import { Project } from '@/types';
 import { ProjectList } from './ProjectList';
-import { ErrorMessage } from '../../ui/ErrorMessage';
+import { ErrorMessage } from '@/components/ui/ErrorMessage';
 
 interface ProjectsSectionProps {
   projects?: Project[];

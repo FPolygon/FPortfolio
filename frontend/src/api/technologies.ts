@@ -1,8 +1,8 @@
-import { Technology } from '../types';
+import { Technology } from '@/types';
 import { API_URL } from './config';
-import { fetchWithRetry } from '../utils/api';
-import { Cache } from '../utils/cache';
-import { APIError } from '../utils/errors';
+import { fetchWithRetry } from '@/utils/api';
+import { Cache } from '@/utils/cache';
+import { APIError } from '@/utils/errors';
 
 // Initialize cache singleton
 const cache = Cache.getInstance();

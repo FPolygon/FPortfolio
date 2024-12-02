@@ -21,8 +21,8 @@ export {
 export { fetchTechnologies, getTechnologiesByCategory } from './technologies';
 
 // Core data types
-export type { Job, Project, Category, Subcategory, Technology } from '../types';
+export type { Job, Project, Category, Subcategory, Technology } from '@/types';
 
 // Utility classes
-export { APIError } from '../utils/errors';
-export { Cache } from '../utils/cache';
+export { APIError } from '@/utils/errors';
+export { Cache } from '@/utils/cache';

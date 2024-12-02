@@ -1,5 +1,5 @@
 import React from 'react';
-import { Job } from '../../../types';
+import { Job } from '@/types';
 import { CompanyLink } from './CompanyLink';
 import { formatDate } from './utils';
 

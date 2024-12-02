@@ -1,5 +1,5 @@
 import { Mail, Github, Linkedin, MapPin } from 'lucide-react';
-import { ContactItemConfig } from '../../../types';
+import { ContactItemConfig } from '@/types';
 
 // Factory function to create contact items configuration
 // Centralizes the creation of contact item data with proper URLs and formatting

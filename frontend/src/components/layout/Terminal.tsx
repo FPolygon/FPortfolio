@@ -5,16 +5,16 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
-import AnimatedAsciiArt from '../animations/AnimatedAsciiArt';
-import { ErrorMessage } from '../ui/ErrorMessage';
-import { LoadingSpinner } from '../ui/LoadingSpinner';
-import { AboutSection } from '../sections/about';
-import { SkillsSection } from '../sections/skills';
-import { ContactSection } from '../sections/contact';
-import { Project, Category, Job } from '../../types';
-import { fetchProjectsByCategory, fetchAllSkills, fetchJobs } from '../../api';
-import { ProjectsSection } from '../sections/projects';
-import { getProjectCategoryColor } from '../sections/projects/utils';
+import AnimatedAsciiArt from '@/components/animations/AnimatedAsciiArt';
+import { ErrorMessage } from '@/components/ui/ErrorMessage';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { AboutSection } from '@/components/sections/about';
+import { SkillsSection } from '@/components/sections/skills';
+import { ContactSection } from '@/components/sections/contact';
+import { Project, Category, Job } from '@/types';
+import { fetchProjectsByCategory, fetchAllSkills, fetchJobs } from '@/api';
+import { ProjectsSection } from '@/components/sections/projects';
+import { getProjectCategoryColor } from '@/components/sections/projects/utils';
 
 // Types for command outputs and responses
 type CommandOutput = string | JSX.Element;

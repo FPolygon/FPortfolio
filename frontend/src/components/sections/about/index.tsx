@@ -1,12 +1,12 @@
 import React from 'react';
-import { WorkHistorySection } from '../work';
+import { WorkHistorySection } from '@/components/sections/work';
 import { ProfileHeader } from './ProfileHeader';
 import { InfoSection } from './InfoSection';
 import { BackgroundSection } from './BackgroundSection';
 import { GridSection } from './GridSection';
 import { EducationSection } from './EducationSection';
 import { CommandSuggestions } from './CommandSuggestions';
-import { Job } from '../../../types';
+import { Job } from '@/types';
 
 interface AboutSectionProps {
   jobs: Job[]; // Array of job experiences

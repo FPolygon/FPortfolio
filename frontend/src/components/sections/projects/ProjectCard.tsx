@@ -1,7 +1,7 @@
 import React from 'react';
-import { Project } from '../../../types';
-import { ProjectLink } from '../../ui/ProjectLink';
-import { TechBadges } from '../../ui/TechBadges';
+import { Project } from '@/types';
+import { ProjectLink } from '@/components/ui/ProjectLink';
+import { TechBadges } from '@/components/ui/TechBadges';
 
 interface ProjectCardProps {
   project: Project;
