@@ -4,9 +4,11 @@ from projects.serializers import TechnologySerializer
 
 
 class AchievementSerializer(serializers.ModelSerializer):
+    job_id = serializers.PrimaryKeyRelatedField(queryset=Job.objects.all(), source="job")
+
     class Meta:
         model = Achievement
-        fields = ["id", "description"]
+        fields = ["id", "description", "job_id"]
 
 
 class JobSerializer(serializers.ModelSerializer):
