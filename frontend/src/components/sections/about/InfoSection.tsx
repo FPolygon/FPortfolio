@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 interface InfoItem {
   id: string;
-  type: "INFO" | "STATUS";
+  type: 'INFO' | 'STATUS';
   content: string;
   /** Optional icon to display before content */
   icon?: string;
@@ -15,28 +15,28 @@ interface InfoSectionProps {
 
 const DEFAULT_INFO_ITEMS: InfoItem[] = [
   {
-    id: "location",
-    type: "INFO",
-    content: "Location: Chicago, IL",
-    icon: "📍",
+    id: 'location',
+    type: 'INFO',
+    content: 'Location: Chicago, IL',
+    icon: '📍',
   },
   {
-    id: "role",
-    type: "INFO",
-    content: "Role: Systems Automation Engineer",
-    icon: "💼",
+    id: 'role',
+    type: 'INFO',
+    content: 'Role: Systems Automation Engineer',
+    icon: '💼',
   },
   {
-    id: "status",
-    type: "STATUS",
-    content: "Currently: Building elegant infrastructure solutions",
-    icon: "🚀",
+    id: 'status',
+    type: 'STATUS',
+    content: 'Currently: Building elegant infrastructure solutions',
+    icon: '🚀',
   },
 ];
 
 const TYPE_STYLES = {
-  INFO: "text-green-400 bg-green-900/30",
-  STATUS: "text-yellow-400 bg-yellow-900/30",
+  INFO: 'text-green-400 bg-green-900/30',
+  STATUS: 'text-yellow-400 bg-yellow-900/30',
 } as const;
 
 /**
@@ -45,14 +45,14 @@ const TYPE_STYLES = {
  */
 export const InfoSection: React.FC<InfoSectionProps> = ({
   items = DEFAULT_INFO_ITEMS,
-  className = "",
+  className = '',
 }) => {
   return (
     <section
       className={`space-y-2 mb-6 ${className}`}
       aria-label="Personal Information"
     >
-      {items.map((item) => (
+      {items.map(item => (
         <div key={item.id} className="flex items-center gap-2">
           <span
             className={`${

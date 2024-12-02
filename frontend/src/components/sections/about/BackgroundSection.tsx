@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface BackgroundSectionProps {
   /**
@@ -16,8 +16,8 @@ interface BackgroundSectionProps {
  * and formatted text content, typically used for professional background information.
  */
 export const BackgroundSection: React.FC<BackgroundSectionProps> = ({
-  content = "A passionate infrastructure and automation engineer with expertise in creating scalable, efficient systems. Specialized in transforming complex technical challenges into elegant solutions.",
-  className = "",
+  content = 'A passionate infrastructure and automation engineer with expertise in creating scalable, efficient systems. Specialized in transforming complex technical challenges into elegant solutions.',
+  className = '',
 }) => {
   return (
     <section className={`mb-6 ${className}`} aria-labelledby="background-title">

@@ -1,4 +1,4 @@
-import { Terminal } from "lucide-react";
+import { Terminal } from 'lucide-react';
 
 // Renders the section header with a terminal icon and a decorative line
 // Uses a hidden h2 for accessibility while maintaining visual design

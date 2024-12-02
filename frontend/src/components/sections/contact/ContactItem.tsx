@@ -1,5 +1,5 @@
-import React from "react";
-import { LucideIcon } from "lucide-react";
+import React from 'react';
+import { LucideIcon } from 'lucide-react';
 
 interface ContactItemProps {
   icon: LucideIcon;
@@ -29,8 +29,8 @@ export const ContactItem: React.FC<ContactItemProps> = ({
         className="text-blue-400 hover:text-blue-300 hover:underline transition-colors duration-150"
         aria-label={`Visit ${label}`}
         // Only add target and rel attributes for external links (not mailto)
-        target={href?.startsWith("mailto") ? undefined : "_blank"}
-        rel={href?.startsWith("mailto") ? undefined : "noopener noreferrer"}
+        target={href?.startsWith('mailto') ? undefined : '_blank'}
+        rel={href?.startsWith('mailto') ? undefined : 'noopener noreferrer'}
       >
         {value}
       </a>

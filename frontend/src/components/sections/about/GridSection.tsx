@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
 interface GridSectionProps {
   title: string; // Section title
   items: string[]; // Array of items to display in grid
   icon: string; // Icon to display before each item
-  variant?: "cyan" | "orange"; // Visual style variant
+  variant?: 'cyan' | 'orange'; // Visual style variant
   className?: string; // Optional className for additional styling
 }
 
@@ -15,19 +15,19 @@ export const GridSection: React.FC<GridSectionProps> = ({
   title,
   items,
   icon,
-  variant = "cyan",
-  className = "",
+  variant = 'cyan',
+  className = '',
 }) => {
   const styles = {
     cyan: {
-      title: "text-cyan-400",
-      icon: "text-cyan-500",
-      item: "text-gray-300 hover:text-cyan-300",
+      title: 'text-cyan-400',
+      icon: 'text-cyan-500',
+      item: 'text-gray-300 hover:text-cyan-300',
     },
     orange: {
-      title: "text-orange-400",
-      icon: "text-orange-500",
-      item: "text-gray-300 hover:text-orange-300",
+      title: 'text-orange-400',
+      icon: 'text-orange-500',
+      item: 'text-gray-300 hover:text-orange-300',
     },
   };
 

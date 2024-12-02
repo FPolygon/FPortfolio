@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, memo } from "react";
+import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
 
 // Define the props interface for the component
 interface AnimatedAsciiArtProps {
@@ -9,10 +9,10 @@ interface AnimatedAsciiArtProps {
 }
 
 const AnimatedAsciiArt: React.FC<AnimatedAsciiArtProps> = ({
-  className = "",
-  textColor = "text-blue-500",
-  highlightColor = "text-green-500",
-  titleColor = "text-green-400",
+  className = '',
+  textColor = 'text-blue-500',
+  highlightColor = 'text-green-500',
+  titleColor = 'text-green-400',
 }) => {
   // Track which characters are currently being hovered
   const [hoveredChars, setHoveredChars] = useState(new Set<string>());
@@ -45,7 +45,7 @@ const AnimatedAsciiArt: React.FC<AnimatedAsciiArtProps> = ({
 
 
                     Systems Automation Engineer
-`.split("\n");
+`.split('\n');
 
   // Generate a random character for the animation effect
   const getRandomChar = useCallback(() => {
@@ -73,13 +73,13 @@ const AnimatedAsciiArt: React.FC<AnimatedAsciiArtProps> = ({
         if (frameCount > 15) {
           cleanupAnimation(charKey);
           // Remove character from hover state
-          setHoveredChars((prev) => {
+          setHoveredChars(prev => {
             const next = new Set(prev);
             next.delete(charKey);
             return next;
           });
           // Remove animated character
-          setAnimatedChars((prev) => {
+          setAnimatedChars(prev => {
             const next = new Map(prev);
             next.delete(charKey);
             return next;
@@ -88,7 +88,7 @@ const AnimatedAsciiArt: React.FC<AnimatedAsciiArtProps> = ({
         }
 
         // Update the animated character with a new random one
-        setAnimatedChars((prev) => {
+        setAnimatedChars(prev => {
           const next = new Map(prev);
           next.set(charKey, getRandomChar());
           return next;
@@ -105,7 +105,7 @@ const AnimatedAsciiArt: React.FC<AnimatedAsciiArtProps> = ({
       // Start the new animation
       animate();
     },
-    [getRandomChar, cleanupAnimation],
+    [getRandomChar, cleanupAnimation]
   );
 
   // Clean up animations on component unmount
@@ -114,7 +114,7 @@ const AnimatedAsciiArt: React.FC<AnimatedAsciiArtProps> = ({
     const animations = animationsRef.current;
     return () => {
       // Use the captured value in cleanup
-      animations.forEach((frameId) => {
+      animations.forEach(frameId => {
         cancelAnimationFrame(frameId);
       });
     };
@@ -132,7 +132,7 @@ const AnimatedAsciiArt: React.FC<AnimatedAsciiArtProps> = ({
       isJobTitle: boolean;
     }) => {
       // Determine if this character is currently animating
-      const isAnimatingChar = hoveredChars.has(charKey) && char !== " ";
+      const isAnimatingChar = hoveredChars.has(charKey) && char !== ' ';
 
       return (
         <span
@@ -144,9 +144,9 @@ const AnimatedAsciiArt: React.FC<AnimatedAsciiArtProps> = ({
               : textColor
           }`}
           onMouseEnter={() => {
-            if (char !== " ") {
+            if (char !== ' ') {
               // Add character to hover state and start animation
-              setHoveredChars((prev) => new Set(prev).add(charKey));
+              setHoveredChars(prev => new Set(prev).add(charKey));
               animateChar(charKey);
             }
           }}
@@ -155,14 +155,14 @@ const AnimatedAsciiArt: React.FC<AnimatedAsciiArtProps> = ({
           {isAnimatingChar ? animatedChars.get(charKey) || char : char}
         </span>
       );
-    },
+    }
   );
 
   return (
     <div className={`whitespace-pre font-mono ${className}`}>
       {baseAsciiArt.map((line, lineIndex) => {
         // Check if this line contains the job title
-        const isJobTitle = line.includes("Systems Automation Engineer");
+        const isJobTitle = line.includes('Systems Automation Engineer');
 
         return (
           <div key={lineIndex} className="leading-none">

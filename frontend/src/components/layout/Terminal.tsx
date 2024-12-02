@@ -4,17 +4,17 @@ import React, {
   useRef,
   useCallback,
   useMemo,
-} from "react";
-import AnimatedAsciiArt from "../animations/AnimatedAsciiArt";
-import { ErrorMessage } from "../ui/ErrorMessage";
-import { LoadingSpinner } from "../ui/LoadingSpinner";
-import { AboutSection } from "../sections/about";
-import { SkillsSection } from "../sections/skills";
-import { ContactSection } from "../sections/contact";
-import { Project, Category, Job } from "../../types";
-import { fetchProjectsByCategory, fetchAllSkills, fetchJobs } from "../../api";
-import { ProjectsSection } from "../sections/projects";
-import { getProjectCategoryColor } from "../sections/projects/utils";
+} from 'react';
+import AnimatedAsciiArt from '../animations/AnimatedAsciiArt';
+import { ErrorMessage } from '../ui/ErrorMessage';
+import { LoadingSpinner } from '../ui/LoadingSpinner';
+import { AboutSection } from '../sections/about';
+import { SkillsSection } from '../sections/skills';
+import { ContactSection } from '../sections/contact';
+import { Project, Category, Job } from '../../types';
+import { fetchProjectsByCategory, fetchAllSkills, fetchJobs } from '../../api';
+import { ProjectsSection } from '../sections/projects';
+import { getProjectCategoryColor } from '../sections/projects/utils';
 
 // Types for command outputs and responses
 type CommandOutput = string | JSX.Element;
@@ -24,16 +24,16 @@ const MAX_HISTORY_SIZE = 1000;
 
 // Define available terminal commands as a const array for type safety and autocompletion
 const AVAILABLE_COMMANDS = [
-  "help",
-  "about",
-  "skills",
-  "projects",
-  "contact",
-  "clear",
-  "projects-infra",
-  "projects-mlops",
-  "projects-data",
-  "projects-ml",
+  'help',
+  'about',
+  'skills',
+  'projects',
+  'contact',
+  'clear',
+  'projects-infra',
+  'projects-mlops',
+  'projects-data',
+  'projects-ml',
 ] as const;
 
 // Create a union type of all available commands for type checking
@@ -60,7 +60,7 @@ interface TerminalState {
 const Terminal: React.FC = () => {
   // Initialize terminal state
   const [state, setState] = useState<TerminalState>({
-    input: "",
+    input: '',
     history: [],
     commandHistory: [],
     historyIndex: -1,
@@ -83,7 +83,7 @@ const Terminal: React.FC = () => {
         <div className="mt-5 mb-3">Type "help" to see available commands.</div>
       </>
     ),
-    [],
+    []
   );
 
   /**
@@ -91,10 +91,10 @@ const Terminal: React.FC = () => {
    * @param category - The category of projects to fetch
    */
   const fetchProjects = useCallback(async (category: string) => {
-    setState((prev) => ({ ...prev, loading: true }));
+    setState(prev => ({ ...prev, loading: true }));
     try {
       const projects = await fetchProjectsByCategory(category);
-      setState((prev) => ({
+      setState(prev => ({
         ...prev,
         projectsData: { ...prev.projectsData, [category]: projects },
         error: null,
@@ -102,11 +102,11 @@ const Terminal: React.FC = () => {
       return projects;
     } catch (error: unknown) {
       const errorMessage =
-        error instanceof Error ? error.message : "Failed to load projects";
-      setState((prev) => ({ ...prev, error: errorMessage }));
+        error instanceof Error ? error.message : 'Failed to load projects';
+      setState(prev => ({ ...prev, error: errorMessage }));
       return [];
     } finally {
-      setState((prev) => ({ ...prev, loading: false }));
+      setState(prev => ({ ...prev, loading: false }));
     }
   }, []);
 
@@ -125,15 +125,15 @@ const Terminal: React.FC = () => {
       skills: async () => {
         try {
           const data = await fetchAllSkills();
-          setState((prev) => ({ ...prev, skillsData: data }));
+          setState(prev => ({ ...prev, skillsData: data }));
           return <SkillsSection data={data} />;
         } catch {
           return <ErrorMessage message="Failed to load skills data" />;
         }
       },
       projects: () => <ProjectsSection showCategories={true} />,
-      "projects-infra": async () => {
-        const category = "infrastructure";
+      'projects-infra': async () => {
+        const category = 'infrastructure';
         const projects = await fetchProjects(category);
         return (
           <ProjectsSection
@@ -144,8 +144,8 @@ const Terminal: React.FC = () => {
           />
         );
       },
-      "projects-mlops": async () => {
-        const category = "mlops";
+      'projects-mlops': async () => {
+        const category = 'mlops';
         const projects = await fetchProjects(category);
         return (
           <ProjectsSection
@@ -156,8 +156,8 @@ const Terminal: React.FC = () => {
           />
         );
       },
-      "projects-data": async () => {
-        const category = "data";
+      'projects-data': async () => {
+        const category = 'data';
         const projects = await fetchProjects(category);
         return (
           <ProjectsSection
@@ -168,8 +168,8 @@ const Terminal: React.FC = () => {
           />
         );
       },
-      "projects-ml": async () => {
-        const category = "ml";
+      'projects-ml': async () => {
+        const category = 'ml';
         const projects = await fetchProjects(category);
         return (
           <ProjectsSection
@@ -182,11 +182,11 @@ const Terminal: React.FC = () => {
       },
       contact: () => <ContactSection />,
       clear: () => {
-        setState((prev) => ({ ...prev, history: [headerMessage] }));
-        return "";
+        setState(prev => ({ ...prev, history: [headerMessage] }));
+        return '';
       },
     }),
-    [state.jobs, state.error, fetchProjects, headerMessage],
+    [state.jobs, state.error, fetchProjects, headerMessage]
   );
 
   /**
@@ -196,11 +196,11 @@ const Terminal: React.FC = () => {
   const handleCommand = useCallback(
     async (cmd: string) => {
       const trimmedInput = cmd.trim().toLowerCase();
-      if (trimmedInput === "") return;
+      if (trimmedInput === '') return;
 
       const trimmedCmd = trimmedInput as AvailableCommand;
 
-      setState((prev) => ({
+      setState(prev => ({
         ...prev,
         commandHistory: [
           ...prev.commandHistory.slice(-MAX_HISTORY_SIZE),
@@ -217,8 +217,8 @@ const Terminal: React.FC = () => {
       }));
 
       // Show loading spinner for project commands
-      if (trimmedCmd.startsWith("projects-")) {
-        setState((prev) => ({
+      if (trimmedCmd.startsWith('projects-')) {
+        setState(prev => ({
           ...prev,
           history: [
             ...prev.history.slice(-MAX_HISTORY_SIZE),
@@ -230,7 +230,7 @@ const Terminal: React.FC = () => {
       try {
         const command = commands[trimmedCmd];
         if (!command) {
-          setState((prev) => ({
+          setState(prev => ({
             ...prev,
             history: [
               ...prev.history.slice(-MAX_HISTORY_SIZE),
@@ -242,11 +242,11 @@ const Terminal: React.FC = () => {
 
         const output = await command();
 
-        if (trimmedCmd !== "clear") {
-          setState((prev) => ({
+        if (trimmedCmd !== 'clear') {
+          setState(prev => ({
             ...prev,
             history: [
-              ...(trimmedCmd.startsWith("projects-")
+              ...(trimmedCmd.startsWith('projects-')
                 ? prev.history.slice(0, -1)
                 : prev.history
               ).slice(-MAX_HISTORY_SIZE),
@@ -256,8 +256,8 @@ const Terminal: React.FC = () => {
         }
       } catch (error: unknown) {
         const errorMessage =
-          error instanceof Error ? error.message : "An unknown error occurred";
-        setState((prev) => ({
+          error instanceof Error ? error.message : 'An unknown error occurred';
+        setState(prev => ({
           ...prev,
           history: [
             ...prev.history.slice(-MAX_HISTORY_SIZE),
@@ -266,21 +266,21 @@ const Terminal: React.FC = () => {
         }));
       }
     },
-    [commands],
+    [commands]
   );
 
   // Update the handleKeyDown function to handle arrow keys
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       switch (e.key) {
-        case "Enter":
+        case 'Enter':
           handleCommand(state.input);
-          setState((prev) => ({ ...prev, input: "", historyIndex: -1 }));
+          setState(prev => ({ ...prev, input: '', historyIndex: -1 }));
           break;
 
-        case "ArrowUp":
+        case 'ArrowUp':
           e.preventDefault();
-          setState((prev) => {
+          setState(prev => {
             if (prev.commandHistory.length === 0) return prev;
 
             const newIndex =
@@ -296,9 +296,9 @@ const Terminal: React.FC = () => {
           });
           break;
 
-        case "ArrowDown":
+        case 'ArrowDown':
           e.preventDefault();
-          setState((prev) => {
+          setState(prev => {
             if (prev.historyIndex === -1) return prev;
 
             const newIndex =
@@ -309,25 +309,25 @@ const Terminal: React.FC = () => {
             return {
               ...prev,
               historyIndex: newIndex,
-              input: newIndex === -1 ? "" : prev.commandHistory[newIndex],
+              input: newIndex === -1 ? '' : prev.commandHistory[newIndex],
             };
           });
           break;
 
-        case "Tab": {
+        case 'Tab': {
           e.preventDefault();
-          const matchingCommands = AVAILABLE_COMMANDS.filter((cmd) =>
-            cmd.startsWith(state.input.toLowerCase()),
+          const matchingCommands = AVAILABLE_COMMANDS.filter(cmd =>
+            cmd.startsWith(state.input.toLowerCase())
           );
           if (matchingCommands.length === 1) {
-            setState((prev) => ({ ...prev, input: matchingCommands[0] }));
+            setState(prev => ({ ...prev, input: matchingCommands[0] }));
           } else if (matchingCommands.length > 1) {
-            setState((prev) => ({
+            setState(prev => ({
               ...prev,
               history: [
                 ...prev.history.slice(-MAX_HISTORY_SIZE),
                 `$ ${state.input}`,
-                matchingCommands.join("  "),
+                matchingCommands.join('  '),
               ],
             }));
           }
@@ -335,7 +335,7 @@ const Terminal: React.FC = () => {
         }
       }
     },
-    [state.input, handleCommand],
+    [state.input, handleCommand]
   );
 
   // Initialize terminal data on mount
@@ -346,7 +346,7 @@ const Terminal: React.FC = () => {
           fetchAllSkills(),
           fetchJobs(),
         ]);
-        setState((prev) => ({
+        setState(prev => ({
           ...prev,
           skillsData: skillsResponse,
           jobs: jobsResponse,
@@ -354,7 +354,7 @@ const Terminal: React.FC = () => {
         }));
       } catch (error) {
         console.error(error);
-        setState((prev) => ({ ...prev, error: "Failed to load data" }));
+        setState(prev => ({ ...prev, error: 'Failed to load data' }));
       }
     };
 
@@ -393,8 +393,8 @@ const Terminal: React.FC = () => {
             value={state.input}
             onChange={useCallback(
               (e: React.ChangeEvent<HTMLInputElement>) =>
-                setState((prev) => ({ ...prev, input: e.target.value })),
-              [],
+                setState(prev => ({ ...prev, input: e.target.value })),
+              []
             )}
             onKeyDown={handleKeyDown}
             className="flex-1 bg-transparent outline-none border-none text-gray-200 caret-gray-200"

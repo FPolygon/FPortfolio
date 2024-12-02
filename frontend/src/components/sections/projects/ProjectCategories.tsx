@@ -1,23 +1,23 @@
 const CATEGORIES = [
   {
-    command: "projects-infra",
-    color: "text-cyan-400",
-    description: "Infrastructure & Cloud Architecture Projects",
+    command: 'projects-infra',
+    color: 'text-cyan-400',
+    description: 'Infrastructure & Cloud Architecture Projects',
   },
   {
-    command: "projects-mlops",
-    color: "text-purple-400",
-    description: "MLOps & Model Deployment Projects",
+    command: 'projects-mlops',
+    color: 'text-purple-400',
+    description: 'MLOps & Model Deployment Projects',
   },
   {
-    command: "projects-data",
-    color: "text-green-400",
-    description: "Data Engineering & Pipeline Projects",
+    command: 'projects-data',
+    color: 'text-green-400',
+    description: 'Data Engineering & Pipeline Projects',
   },
   {
-    command: "projects-ml",
-    color: "text-yellow-400",
-    description: "Machine Learning & AI Projects",
+    command: 'projects-ml',
+    color: 'text-yellow-400',
+    description: 'Machine Learning & AI Projects',
   },
 ];
 

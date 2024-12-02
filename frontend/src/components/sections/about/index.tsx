@@ -1,12 +1,12 @@
-import React from "react";
-import { WorkHistorySection } from "../work";
-import { ProfileHeader } from "./ProfileHeader";
-import { InfoSection } from "./InfoSection";
-import { BackgroundSection } from "./BackgroundSection";
-import { GridSection } from "./GridSection";
-import { EducationSection } from "./EducationSection";
-import { CommandSuggestions } from "./CommandSuggestions";
-import { Job } from "../../../types";
+import React from 'react';
+import { WorkHistorySection } from '../work';
+import { ProfileHeader } from './ProfileHeader';
+import { InfoSection } from './InfoSection';
+import { BackgroundSection } from './BackgroundSection';
+import { GridSection } from './GridSection';
+import { EducationSection } from './EducationSection';
+import { CommandSuggestions } from './CommandSuggestions';
+import { Job } from '../../../types';
 
 interface AboutSectionProps {
   jobs: Job[]; // Array of job experiences
@@ -15,17 +15,17 @@ interface AboutSectionProps {
 
 // Define constants without readonly modifier
 const CORE_VALUES = [
-  "Infrastructure as Code",
-  "Automation First Mindset",
-  "Continuous Learning",
-  "Clean, Maintainable Solutions",
+  'Infrastructure as Code',
+  'Automation First Mindset',
+  'Continuous Learning',
+  'Clean, Maintainable Solutions',
 ];
 
 const INTERESTS = [
-  "Cloud Architecture",
-  "DevOps Practices",
-  "System Optimization",
-  "Automation Frameworks",
+  'Cloud Architecture',
+  'DevOps Practices',
+  'System Optimization',
+  'Automation Frameworks',
 ];
 
 /**
@@ -34,7 +34,7 @@ const INTERESTS = [
  */
 export const AboutSection: React.FC<AboutSectionProps> = ({
   jobs,
-  className = "",
+  className = '',
 }) => {
   return (
     <main className={`whitespace-pre-wrap ${className}`} role="main">

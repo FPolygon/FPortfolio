@@ -1,7 +1,7 @@
-import React from "react";
-import { Job } from "../../../types";
-import { CompanyLink } from "./CompanyLink";
-import { formatDate } from "./utils";
+import React from 'react';
+import { Job } from '../../../types';
+import { CompanyLink } from './CompanyLink';
+import { formatDate } from './utils';
 
 interface JobEntryProps {
   job: Job;
@@ -10,10 +10,10 @@ interface JobEntryProps {
 export const JobEntry: React.FC<JobEntryProps> = ({ job }) => {
   // Format the end date string based on job status
   const endDateString = job.is_current
-    ? "Present"
+    ? 'Present'
     : job.end_date
     ? formatDate(job.end_date)
-    : "";
+    : '';
 
   return (
     <div className="mb-4 group">
@@ -46,7 +46,7 @@ export const JobEntry: React.FC<JobEntryProps> = ({ job }) => {
       <div className="ml-6 mt-2">
         <span className="text-emerald-500">Technologies: </span>
         <span className="text-gray-300">
-          {job.technologies.map((tech) => tech.name).join(", ")}
+          {job.technologies.map(tech => tech.name).join(', ')}
         </span>
       </div>
     </div>

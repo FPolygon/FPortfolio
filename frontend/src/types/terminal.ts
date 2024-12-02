@@ -1,7 +1,7 @@
 export interface TerminalHistoryItem {
   id: string;
   timestamp: number;
-  type: "command" | "output" | "error";
+  type: 'command' | 'output' | 'error';
   content: string;
 }
 
@@ -14,7 +14,7 @@ export interface TerminalState {
 
 export interface TerminalContextType {
   state: TerminalState;
-  addToHistory: (item: Omit<TerminalHistoryItem, "id" | "timestamp">) => void;
+  addToHistory: (item: Omit<TerminalHistoryItem, 'id' | 'timestamp'>) => void;
   clearHistory: () => void;
   setInput: (input: string) => void;
   addToCommandHistory: (command: string) => void;

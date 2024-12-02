@@ -1,2 +1,2 @@
 // index.tsx
-export { ProjectsSection } from "./ProjectsSection";
+export { ProjectsSection } from './ProjectsSection';

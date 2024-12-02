@@ -1,8 +1,8 @@
-import React from "react";
-import ProjectCategories from "./ProjectCategories";
-import { Project } from "../../../types";
-import { ProjectList } from "./ProjectList";
-import { ErrorMessage } from "../../ui/ErrorMessage";
+import React from 'react';
+import ProjectCategories from './ProjectCategories';
+import { Project } from '../../../types';
+import { ProjectList } from './ProjectList';
+import { ErrorMessage } from '../../ui/ErrorMessage';
 
 interface ProjectsSectionProps {
   projects?: Project[];
@@ -15,7 +15,7 @@ interface ProjectsSectionProps {
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   projects,
   category,
-  titleColor = "text-blue-500",
+  titleColor = 'text-blue-500',
   error,
   showCategories = false,
 }) => {
@@ -34,7 +34,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   return (
     <ProjectList
       projects={projects}
-      category={category || ""}
+      category={category || ''}
       titleColor={titleColor}
     />
   );

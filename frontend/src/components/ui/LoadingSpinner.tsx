@@ -1,5 +1,5 @@
 // src/components/ui/LoadingSpinner.tsx
-import React from "react";
+import React from 'react';
 
 export const LoadingSpinner: React.FC = () => (
   <div className="flex items-center space-x-2 mt-2">

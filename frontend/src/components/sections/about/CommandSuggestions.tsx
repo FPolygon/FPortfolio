@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Command {
   id: string;
@@ -21,9 +21,9 @@ interface CommandSuggestionsProps {
 }
 
 const DEFAULT_COMMANDS: Command[] = [
-  { id: "skills", label: "skills" },
-  { id: "projects", label: "projects" },
-  { id: "contact", label: "contact" },
+  { id: 'skills', label: 'skills' },
+  { id: 'projects', label: 'projects' },
+  { id: 'contact', label: 'contact' },
 ];
 
 /**
@@ -33,10 +33,10 @@ const DEFAULT_COMMANDS: Command[] = [
 export const CommandSuggestions: React.FC<CommandSuggestionsProps> = ({
   commands = DEFAULT_COMMANDS,
   onCommandSelect = () => {},
-  className = "",
+  className = '',
 }) => {
   const handleKeyDown = (e: React.KeyboardEvent, command: string) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       onCommandSelect(command);
     }
@@ -46,11 +46,11 @@ export const CommandSuggestions: React.FC<CommandSuggestionsProps> = ({
     <div className={`text-gray-500 mt-4 ${className}`}>
       <p className="mb-2">Would you like to know more? Try these commands:</p>
       <div className="mt-2 flex flex-wrap gap-4">
-        {commands.map((cmd) => (
+        {commands.map(cmd => (
           <button
             key={cmd.id}
             onClick={() => onCommandSelect(cmd.label)}
-            onKeyDown={(e) => handleKeyDown(e, cmd.label)}
+            onKeyDown={e => handleKeyDown(e, cmd.label)}
             className="text-blue-400 hover:text-blue-300 focus:text-blue-300
                      cursor-pointer transition-colors outline-none
                      focus:ring-2 focus:ring-blue-400 focus:ring-offset-2

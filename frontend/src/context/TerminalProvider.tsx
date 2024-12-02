@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useMemo } from "react";
-import { TerminalState, TerminalHistoryItem } from "../types/terminal";
-import { MAX_HISTORY_LENGTH, MAX_COMMAND_HISTORY } from "../constants/terminal";
-import { generateId } from "../utils/terminal";
-import { TerminalContext } from "./terminalContext";
+import React, { useState, useCallback, useMemo } from 'react';
+import { TerminalState, TerminalHistoryItem } from '../types/terminal';
+import { MAX_HISTORY_LENGTH, MAX_COMMAND_HISTORY } from '../constants/terminal';
+import { generateId } from '../utils/terminal';
+import { TerminalContext } from './terminalContext';
 
 // Terminal Provider component for managing terminal state and history
 export const TerminalProvider: React.FC<{
@@ -16,7 +16,7 @@ export const TerminalProvider: React.FC<{
 }) => {
   // Initialize terminal state
   const [state, setState] = useState<TerminalState>({
-    input: "",
+    input: '',
     history: [],
     commandHistory: [],
     historyIndex: -1,
@@ -24,8 +24,8 @@ export const TerminalProvider: React.FC<{
 
   // Add new item to terminal history with size limit enforcement
   const addToHistory = useCallback(
-    (item: Omit<TerminalHistoryItem, "id" | "timestamp">) => {
-      setState((prev) => {
+    (item: Omit<TerminalHistoryItem, 'id' | 'timestamp'>) => {
+      setState(prev => {
         const newItem: TerminalHistoryItem = {
           ...item,
           id: generateId(),
@@ -42,12 +42,12 @@ export const TerminalProvider: React.FC<{
         };
       });
     },
-    [maxHistory],
+    [maxHistory]
   );
 
   // Clear terminal history
   const clearHistory = useCallback(() => {
-    setState((prev) => ({
+    setState(prev => ({
       ...prev,
       history: [],
     }));
@@ -55,7 +55,7 @@ export const TerminalProvider: React.FC<{
 
   // Update current input value
   const setInput = useCallback((input: string) => {
-    setState((prev) => ({
+    setState(prev => ({
       ...prev,
       input,
     }));
@@ -64,12 +64,12 @@ export const TerminalProvider: React.FC<{
   // Add command to command history with size limit enforcement
   const addToCommandHistory = useCallback(
     (command: string) => {
-      setState((prev) => {
+      setState(prev => {
         const newCommandHistory = [...prev.commandHistory, command];
         if (newCommandHistory.length > maxCommandHistory) {
           newCommandHistory.splice(
             0,
-            newCommandHistory.length - maxCommandHistory,
+            newCommandHistory.length - maxCommandHistory
           );
         }
         return {
@@ -79,16 +79,16 @@ export const TerminalProvider: React.FC<{
         };
       });
     },
-    [maxCommandHistory],
+    [maxCommandHistory]
   );
 
   // Update history index with bounds checking
   const setHistoryIndex = useCallback((index: number) => {
-    setState((prev) => ({
+    setState(prev => ({
       ...prev,
       historyIndex: Math.min(
         Math.max(index, -1),
-        prev.commandHistory.length - 1,
+        prev.commandHistory.length - 1
       ),
     }));
   }, []);
@@ -110,7 +110,7 @@ export const TerminalProvider: React.FC<{
       setInput,
       addToCommandHistory,
       setHistoryIndex,
-    ],
+    ]
   );
 
   return (

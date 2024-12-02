@@ -1,8 +1,8 @@
 // src/components/sections/projects/ProjectList.tsx
-import React from "react";
-import { Project } from "../../../types";
-import { ProjectLink } from "../../ui/ProjectLink";
-import { TechBadges } from "../../ui/TechBadges";
+import React from 'react';
+import { Project } from '../../../types';
+import { ProjectLink } from '../../ui/ProjectLink';
+import { TechBadges } from '../../ui/TechBadges';
 
 // Define the props interface for our ProjectList component
 interface ProjectListProps {
@@ -13,8 +13,8 @@ interface ProjectListProps {
 
 export const ProjectList: React.FC<ProjectListProps> = ({
   projects,
-  category = "FEATURED", // Default category if none provided
-  titleColor = "text-blue-500", // Default color if none provided
+  category = 'FEATURED', // Default category if none provided
+  titleColor = 'text-blue-500', // Default color if none provided
 }) => {
   return (
     <div className="whitespace-pre-wrap">

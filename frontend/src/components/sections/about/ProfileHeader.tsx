@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface ProfileHeaderProps {
   name?: string; // Name to display in the header
@@ -10,8 +10,8 @@ interface ProfileHeaderProps {
  * and decorative underline.
  */
 export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
-  name = "Francis Pagulayan",
-  className = "",
+  name = 'Francis Pagulayan',
+  className = '',
 }) => {
   return (
     <header className={`mb-6 ${className}`} role="banner">

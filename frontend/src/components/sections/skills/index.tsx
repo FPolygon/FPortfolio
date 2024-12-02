@@ -1,6 +1,6 @@
-import React from "react";
-import { Category } from "../../../types";
-import { CATEGORY_COLORS } from "./constants";
+import React from 'react';
+import { Category } from '../../../types';
+import { CATEGORY_COLORS } from './constants';
 
 interface SkillsSectionProps {
   data: Category[];
@@ -16,15 +16,15 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ data }) => {
   const getCategoryColors = (categoryName: string) => {
     return (
       CATEGORY_COLORS[categoryName] || {
-        header: "text-gray-500",
-        label: "text-gray-400",
+        header: 'text-gray-500',
+        label: 'text-gray-400',
       }
     );
   };
 
   return (
     <div className="whitespace-pre-wrap">
-      {data.map((category) => {
+      {data.map(category => {
         const colors = getCategoryColors(category.name);
 
         return (
@@ -36,7 +36,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ data }) => {
 
             {/* Skills Grid */}
             <div className="grid grid-cols-1 gap-1">
-              {category.subcategories.map((subcategory) => (
+              {category.subcategories.map(subcategory => (
                 <div key={subcategory.id} className="flex">
                   {/* Subcategory Label */}
                   <span className={`${colors.label} w-48`}>
@@ -45,9 +45,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ data }) => {
 
                   {/* Technologies List */}
                   <span className="text-gray-300">
-                    {subcategory.technologies
-                      .map((tech) => tech.name)
-                      .join(", ")}
+                    {subcategory.technologies.map(tech => tech.name).join(', ')}
                   </span>
                 </div>
               ))}

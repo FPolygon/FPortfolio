@@ -1,5 +1,5 @@
 // src/components/ui/TechBadges.tsx
-import React from "react";
+import React from 'react';
 
 interface Technology {
   name: string;

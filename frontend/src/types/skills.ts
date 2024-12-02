@@ -1,4 +1,4 @@
-import { Technology } from "./common";
+import { Technology } from './common';
 
 export interface Subcategory {
   id: number;
