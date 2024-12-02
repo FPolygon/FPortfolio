@@ -1,10 +1,10 @@
 import React from "react";
-import TerminalPortfolio from "./components/TerminalPortfolio";
+import Terminal from "./components/layout/Terminal";
 
 const App: React.FC = () => {
   return (
     <main className="min-h-screen bg-black">
-      <TerminalPortfolio />
+      <Terminal />
     </main>
   );
 };

@@ -44,9 +44,11 @@ project-root/
 │   │   ├── views.py
 │   │   ├── urls.py
 │   │   └── serializers.py
-│   ├── skills/        # Skills app (planned)
-│   ├── about/         # About app (planned)
-│   ├── contact/       # Contact app (planned)
+│   ├── about/         # About app
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   └── serializers.py
 │   ├── db.sqlite3
 │   └── requirements.txt
 └── infrastructure/    # Terraform files (planned)
@@ -122,8 +124,7 @@ python manage.py runserver
 - [x] Backend API setup
 - [x] Projects app
 - [x] Skills app
-- [ ] About app
-- [ ] Contact app
+- [x] About app
 - [ ] Docker containerization
 - [ ] Terraform configuration
 - [ ] AWS deployment
