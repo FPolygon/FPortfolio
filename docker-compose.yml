@@ -1,0 +1,81 @@
+services:
+  backend:
+    # Backend service setup with Django
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}  # Django secret key for build
+        DJANGO_DEBUG: ${DJANGO_DEBUG}          # Debug mode for Django
+    environment:
+      # Django environment variables
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
+      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=db
+      - DB_PORT=5432
+    volumes:
+      - static_files:/backend/staticfiles  # Persistent storage for static files
+    restart: unless-stopped                # Ensure service restarts on failure
+    ports:
+      - '8000:8000'                        # Expose backend on port 8000
+    depends_on:
+      db:
+        condition: service_healthy         # Wait for the database to be ready
+    networks:
+      - app-network                         # Shared network for communication
+
+  frontend:
+    # Frontend service setup with a build context
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL}       # Frontend API URL during build
+    environment:
+      - VITE_API_URL=${VITE_API_URL}        # Environment variable for API URL
+    volumes:
+      - static_files:/usr/share/nginx/html/static  # Serve static files
+    restart: unless-stopped                # Restart on failure
+    ports:
+      - '80:80'                            # Expose frontend on port 80
+    networks:
+      - app-network                         # Shared network with backend and DB
+    depends_on:
+      - backend                            # Ensure backend starts first
+
+  db:
+    # Database service using PostgreSQL
+    image: postgres:15-alpine              # Lightweight PostgreSQL image
+    environment:
+      # PostgreSQL database configuration
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persistent DB storage
+    restart: unless-stopped                # Restart on failure
+    ports:
+      - '5432:5432'                        # Expose DB on port 5432
+    networks:
+      - app-network                         # Shared network
+    healthcheck:
+      # Ensure database is ready before other services
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+networks:
+  app-network:
+    driver: bridge                         # Bridge network for service isolation
+
+volumes:
+  postgres_data:
+    driver: local                          # Local volume for DB persistence
+  static_files:
+    driver: local                          # Local volume for static files

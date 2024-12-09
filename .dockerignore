@@ -1,0 +1,30 @@
+# Ignore node modules and Python cache
+node_modules
+__pycache__
+*.pyc
+*.egg-info
+
+# Git-related files
+.git
+.gitignore
+
+# MacOS and temporary files
+.DS_Store
+*.log
+*.tmp
+
+# Frontend build and cache
+dist
+build
+.cache
+
+# Python virtual environment
+venv
+env
+
+# IDE configurations
+.vscode/
+.idea/
+
+# Docker-specific files
+Dockerfile.*

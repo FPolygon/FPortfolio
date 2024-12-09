@@ -16,9 +16,7 @@ __init__.py
 build/
 develop-eggs/
 dist/
-dist-ssr/
 downloads/
-eggs/
 .eggs/
 lib/
 lib64/
@@ -41,13 +39,10 @@ venv.bak/
 .pdm-python
 
 # Package Management
-# Poetry
 poetry.lock
-# PDM
 .pdm.toml
 .pdm-build/
 __pypackages__/
-# Pipenv
 Pipfile.lock
 
 # Django
@@ -61,12 +56,8 @@ migrations/
 
 # Frontend
 node_modules/
-.next/
-out/
+dist/
 coverage/
-*.local
-.mf/
-.rollup.cache
 tsconfig.tsbuildinfo
 .webassets-cache
 vite-env.d.ts
@@ -75,16 +66,13 @@ vite-env.d.ts
 htmlcov/
 .tox/
 .nox/
-.coverage
-.coverage.*
+.coverage*
 .cache
 nosetests.xml
 coverage.xml
 *.cover
-*.py,cover
 .hypothesis/
 .pytest_cache/
-cover/
 cypress/videos/
 cypress/screenshots/
 
@@ -95,11 +83,7 @@ site/
 # Type Checking
 .mypy_cache/
 .dmypy.json
-dmypy.json
-.pyre/
 .pytype/
-*.tsbuildinfo
-.tscache/
 
 # IDE and Editors
 .idea/
@@ -107,11 +91,7 @@ dmypy.json
 !.vscode/extensions.json
 *.swp
 *.swo
-*.suo
 *.ntvs*
-*.njsproj
-*.sln
-*.sw?
 .project
 .classpath
 .settings/
@@ -123,39 +103,19 @@ logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 celerybeat-schedule
 celerybeat.pid
-
-# IPython/Jupyter
-.ipynb_checkpoints
-profile_default/
-ipython_config.py
-.scrapy
-cython_debug/
-
-# Compiled files
-*.manifest
-*.spec
-*.mo
-*.pot
-*.sage.py
 
 # Secrets and Security
 *.pem
 *.key
 *.cert
 .pgpass
-.my_pgpass
 
 # OS Generated Files
 .DS_Store
-.DS_Store?
-._*
 .Spotlight-V100
 .Trashes
 ehthumbs.db
 Thumbs.db
-*~

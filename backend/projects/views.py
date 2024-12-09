@@ -1,4 +1,6 @@
-from rest_framework import viewsets
+from rest_framework.views import APIView
+from rest_framework import viewsets, status
+from rest_framework.response import Response
 from .models import Category, Subcategory, Project, Technology
 from .serializers import (
     CategorySerializer,
@@ -26,3 +28,8 @@ class SubcategoryViewSet(viewsets.ModelViewSet):
 class TechnologyViewSet(viewsets.ModelViewSet):
     queryset = Technology.objects.all()
     serializer_class = TechnologySerializer
+
+
+class HealthCheckView(APIView):
+    def get(self, request):
+        return Response({"status": "ok"}, status=status.HTTP_200_OK)
