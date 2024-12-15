@@ -116,12 +116,22 @@ const Terminal: React.FC = () => {
   >(
     () => ({
       help: () => `Available commands:
-- about: Learn about me
-- skills: View my technical skills
-- projects: See all projects and categories
-- contact: Get my contact information
-- clear: Clear the terminal`,
-      about: () => <AboutSection jobs={state.jobs} />,
+  - about: Learn about me
+  - skills: View my technical skills
+  - projects: See all projects and categories
+  - contact: Get my contact information
+  - clear: Clear the terminal`,
+      about: () => (
+        <AboutSection
+          jobs={state.jobs}
+          onCommand={(cmd: string) => {
+            // Just update the input field, don't execute the command
+            setState(prev => ({ ...prev, input: cmd }));
+            // Focus the input field
+            inputRef.current?.focus();
+          }}
+        />
+      ),
       skills: async () => {
         try {
           const data = await fetchAllSkills();
@@ -131,7 +141,15 @@ const Terminal: React.FC = () => {
           return <ErrorMessage message="Failed to load skills data" />;
         }
       },
-      projects: () => <ProjectsSection showCategories={true} />,
+      projects: () => (
+        <ProjectsSection
+          showCategories={true}
+          onCategorySelect={(cmd: string) => {
+            setState(prev => ({ ...prev, input: cmd }));
+            inputRef.current?.focus();
+          }}
+        />
+      ),
       'projects-infra': async () => {
         const category = 'infrastructure';
         const projects = await fetchProjects(category);

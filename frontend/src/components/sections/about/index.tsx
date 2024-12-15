@@ -11,6 +11,7 @@ import { Job } from '@/types';
 interface AboutSectionProps {
   jobs: Job[]; // Array of job experiences
   className?: string; // Optional className for additional styling
+  onCommand?: (command: string) => void; // Add this prop for command handling
 }
 
 // Define constants without readonly modifier
@@ -35,6 +36,7 @@ const INTERESTS = [
 export const AboutSection: React.FC<AboutSectionProps> = ({
   jobs,
   className = '',
+  onCommand = () => {}, // Add default value
 }) => {
   return (
     <main className={`whitespace-pre-wrap ${className}`} role="main">
@@ -59,7 +61,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
 
         <EducationSection />
         <WorkHistorySection jobs={jobs} />
-        <CommandSuggestions />
+        <CommandSuggestions onCommandSelect={onCommand} />
       </div>
     </main>
   );
