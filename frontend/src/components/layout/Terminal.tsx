@@ -90,25 +90,6 @@ const Terminal: React.FC = () => {
    * Fetches projects for a given category and updates state
    * @param category - The category of projects to fetch
    */
-  const fetchProjects = useCallback(async (category: string) => {
-    setState(prev => ({ ...prev, loading: true }));
-    try {
-      const projects = await fetchProjectsByCategory(category);
-      setState(prev => ({
-        ...prev,
-        projectsData: { ...prev.projectsData, [category]: projects },
-        error: null,
-      }));
-      return projects;
-    } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'Failed to load projects';
-      setState(prev => ({ ...prev, error: errorMessage }));
-      return [];
-    } finally {
-      setState(prev => ({ ...prev, loading: false }));
-    }
-  }, []);
 
   // Memoized commands object to prevent unnecessary rerenders
   const commands = useMemo<
@@ -125,9 +106,7 @@ const Terminal: React.FC = () => {
         <AboutSection
           jobs={state.jobs}
           onCommand={(cmd: string) => {
-            // Just update the input field, don't execute the command
             setState(prev => ({ ...prev, input: cmd }));
-            // Focus the input field
             inputRef.current?.focus();
           }}
         />
@@ -151,20 +130,57 @@ const Terminal: React.FC = () => {
         />
       ),
       'projects-infra': async () => {
-        const category = 'infrastructure';
-        const projects = await fetchProjects(category);
-        return (
-          <ProjectsSection
-            projects={projects}
-            category={category}
-            titleColor={getProjectCategoryColor(category)}
-            error={state.error}
-          />
-        );
+        try {
+          setState(prev => ({ ...prev, loading: true, error: null }));
+          const category = 'infrastructure';
+
+          const data = await fetchProjectsByCategory(category);
+
+          console.log('API Response:', data);
+
+          // Validate the response
+          if (!Array.isArray(data)) {
+            console.error('Data is not an array:', data);
+            throw new Error('Invalid response format from API');
+          }
+
+          setState(prev => ({
+            ...prev,
+            projectsData: {
+              ...prev.projectsData,
+              [category]: data,
+            },
+            loading: false,
+          }));
+
+          return (
+            <ProjectsSection
+              projects={data}
+              category={category}
+              titleColor={getProjectCategoryColor(category)}
+              error={null}
+            />
+          );
+        } catch (error) {
+          console.error('Error loading projects:', error);
+          const errorMessage =
+            error instanceof Error ? error.message : 'Failed to load projects';
+
+          setState(prev => ({ ...prev, loading: false, error: errorMessage }));
+
+          return (
+            <ProjectsSection
+              projects={[]}
+              category="infrastructure"
+              titleColor={getProjectCategoryColor('infrastructure')}
+              error={errorMessage}
+            />
+          );
+        }
       },
       'projects-mlops': async () => {
         const category = 'mlops';
-        const projects = await fetchProjects(category);
+        const projects = await fetchProjectsByCategory(category);
         return (
           <ProjectsSection
             projects={projects}
@@ -176,7 +192,7 @@ const Terminal: React.FC = () => {
       },
       'projects-data': async () => {
         const category = 'data';
-        const projects = await fetchProjects(category);
+        const projects = await fetchProjectsByCategory(category);
         return (
           <ProjectsSection
             projects={projects}
@@ -188,7 +204,7 @@ const Terminal: React.FC = () => {
       },
       'projects-ml': async () => {
         const category = 'ml';
-        const projects = await fetchProjects(category);
+        const projects = await fetchProjectsByCategory(category);
         return (
           <ProjectsSection
             projects={projects}
@@ -204,7 +220,7 @@ const Terminal: React.FC = () => {
         return '';
       },
     }),
-    [state.jobs, state.error, fetchProjects, headerMessage]
+    [state.jobs, state.error, headerMessage]
   );
 
   /**

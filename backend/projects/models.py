@@ -42,6 +42,7 @@ class Technology(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=20)
     description = models.TextField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="projects", null=True)
     technology = models.ManyToManyField(Technology, related_name="projects")
     github = models.URLField(max_length=200)
 

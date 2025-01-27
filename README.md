@@ -125,7 +125,7 @@ python manage.py runserver
 - [x] Projects app
 - [x] Skills app
 - [x] About app
-- [ ] Docker containerization
+- [x] Docker containerization
 - [ ] Terraform configuration
 - [ ] AWS deployment
 - [ ] CI/CD pipeline

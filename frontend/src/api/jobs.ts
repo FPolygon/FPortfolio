@@ -14,7 +14,7 @@ export const fetchJobs = async (): Promise<Job[]> => {
   const cached = cache.get<Job[]>(cacheKey);
   if (cached) return cached;
 
-  const data = await fetchWithRetry<Job[]>(`${API_URL}/jobs/`);
+  const data = await fetchWithRetry<Job[]>(`${API_URL}/about/jobs/`);
   cache.set(cacheKey, data);
   return data;
 };
@@ -27,7 +27,9 @@ export const fetchJobsByTechnology = async (
     throw new APIError('Invalid technology ID', 400);
   }
 
-  return fetchWithRetry<Job[]>(`${API_URL}/jobs/?technology=${technologyId}`);
+  return fetchWithRetry<Job[]>(
+    `${API_URL}/about/jobs/?technology=${technologyId}`
+  );
 };
 
 // Fetch jobs within date range
@@ -43,6 +45,6 @@ export const fetchJobsByDateRange = async (
   }
 
   return fetchWithRetry<Job[]>(
-    `${API_URL}/jobs/?start_date=${startDate}&end_date=${endDate}`
+    `${API_URL}/about/jobs/?start_date=${startDate}&end_date=${endDate}`
   );
 };

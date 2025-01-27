@@ -3,7 +3,7 @@ import { API_URL } from './config';
 
 // Fetch all available categories
 export const fetchCategories = async (): Promise<Category[]> => {
-  const response = await fetch(`${API_URL}/categories/`);
+  const response = await fetch(`${API_URL}/projects/categories/`);
   if (!response.ok) {
     throw new Error('Failed to fetch categories');
   }
@@ -14,7 +14,7 @@ export const fetchCategories = async (): Promise<Category[]> => {
 export const fetchSkillsByCategory = async (
   categoryName: string
 ): Promise<Category> => {
-  const response = await fetch(`${API_URL}/categories/`);
+  const response = await fetch(`${API_URL}/projects/categories/`);
   if (!response.ok) {
     throw new Error('Failed to fetch skills');
   }
@@ -32,7 +32,7 @@ export const fetchSkillsByCategory = async (
 
 // Fetch all categories with their skills
 export const fetchAllSkills = async (): Promise<Category[]> => {
-  const response = await fetch(`${API_URL}/categories/`);
+  const response = await fetch(`${API_URL}/projects/categories/`);
   if (!response.ok) {
     throw new Error('Failed to fetch skills');
   }

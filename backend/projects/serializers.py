@@ -26,7 +26,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProjectSerializer(serializers.ModelSerializer):
     technology = TechnologySerializer(many=True, read_only=True)
+    category = serializers.StringRelatedField()
 
     class Meta:
         model = Project
-        fields = ["id", "name", "description", "technology", "github"]
+        fields = ["id", "name", "description", "technology", "github", "category"]

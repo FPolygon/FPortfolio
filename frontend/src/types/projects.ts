@@ -5,5 +5,6 @@ export interface Project {
   name: string;
   description: string;
   technology: Technology[];
+  category: string;
   github: string;
 }

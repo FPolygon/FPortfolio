@@ -13,7 +13,9 @@ export const fetchTechnologies = async (): Promise<Technology[]> => {
   const cached = cache.get<Technology[]>(cacheKey);
   if (cached) return cached;
 
-  const data = await fetchWithRetry<Technology[]>(`${API_URL}/technologies/`);
+  const data = await fetchWithRetry<Technology[]>(
+    `${API_URL}/projects/technologies/`
+  );
   cache.set(cacheKey, data);
   return data;
 };
@@ -31,7 +33,9 @@ export const getTechnologiesByCategory = async (
   if (cached) return cached;
 
   const data = await fetchWithRetry<Technology[]>(
-    `${API_URL}/technologies/?category=${encodeURIComponent(categoryName)}`
+    `${API_URL}/projects/technologies/?category=${encodeURIComponent(
+      categoryName
+    )}`
   );
   cache.set(cacheKey, data);
   return data;

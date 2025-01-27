@@ -1,4 +1,5 @@
 import React from 'react';
+import CategoryHeader from '@/components/ui/CategoryHeader';
 
 interface Education {
   id: string;
@@ -51,14 +52,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({
 }) => {
   return (
     <section className={`mb-6 ${className}`} aria-labelledby="education-title">
-      <h2
-        id="education-title"
-        className="text-indigo-400 font-bold mb-2 flex items-center"
-        aria-label="Education Section"
-      >
-        <span className="mr-2">━━━ EDUCATION</span>
-        <span className="h-px flex-grow bg-indigo-400/30" />
-      </h2>
+      <CategoryHeader text="EDUCATION" textColor="text-indigo-400" />
 
       {educationData.map(edu => (
         <article key={edu.id} className="mb-4 group">
@@ -76,13 +70,12 @@ export const EducationSection: React.FC<EducationSectionProps> = ({
             </span>
             <span className="text-blue-400">{edu.school}</span>
           </header>
-
           <ul className="ml-6 mt-2 space-y-1" role="list">
             {edu.details.map(detail => (
               <li
                 key={detail.id}
                 className="flex items-start gap-2 group-hover:text-gray-200
-                         text-gray-400 transition-colors"
+                text-gray-400 transition-colors"
               >
                 <span className="text-indigo-500 shrink-0" aria-hidden="true">
                   ▪

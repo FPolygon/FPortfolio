@@ -1,0 +1,16 @@
+services:
+  frontend:
+    build:
+      target: production
+
+  backend:
+    build:
+      target: production
+    environment:
+      - DEBUG=0
+      - DJANGO_SETTINGS_MODULE=backend.settings.production
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DB_NAME=${RDS_DB_NAME}
+      - DB_USER=${RDS_USERNAME}
+      - DB_PASSWORD=${RDS_PASSWORD}
+      - DB_HOST=${RDS_HOSTNAME}

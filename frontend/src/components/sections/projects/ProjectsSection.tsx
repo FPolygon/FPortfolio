@@ -10,7 +10,7 @@ interface ProjectsSectionProps {
   titleColor?: string;
   error?: string | null;
   showCategories?: boolean;
-  onCategorySelect?: (command: string) => void; // Add this prop
+  onCategorySelect?: (command: string) => void;
 }
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
@@ -19,7 +19,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   titleColor = 'text-blue-500',
   error,
   showCategories = false,
-  onCategorySelect, // Add this prop
+  onCategorySelect,
 }) => {
   if (showCategories) {
     return <ProjectCategories onCategorySelect={onCategorySelect} />;

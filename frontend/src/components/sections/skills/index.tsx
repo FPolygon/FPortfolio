@@ -1,6 +1,7 @@
 import React from 'react';
 import { Category } from '@/types';
 import { CATEGORY_COLORS } from './constants';
+import CategoryHeader from '@/components/ui/CategoryHeader';
 
 interface SkillsSectionProps {
   data: Category[];
@@ -26,13 +27,10 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ data }) => {
     <div className="whitespace-pre-wrap">
       {data.map(category => {
         const colors = getCategoryColors(category.name);
-
         return (
           <div key={category.id} className="mb-6">
             {/* Category Header */}
-            <div className={`${colors.header} font-bold mb-2`}>
-              ━━━ {category.name} ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            </div>
+            <CategoryHeader text={category.name} textColor={colors.header} />
 
             {/* Skills Grid */}
             <div className="grid grid-cols-1 gap-1">
@@ -42,7 +40,6 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ data }) => {
                   <span className={`${colors.label} w-48`}>
                     {subcategory.name}:
                   </span>
-
                   {/* Technologies List */}
                   <span className="text-gray-300">
                     {subcategory.technologies.map(tech => tech.name).join(', ')}

@@ -1,4 +1,5 @@
 import React from 'react';
+import CategoryHeader from '@/components/ui/CategoryHeader';
 
 interface Category {
   command: string;
@@ -48,12 +49,12 @@ const ProjectCategories: React.FC<ProjectCategoriesProps> = ({
 
   return (
     <div className="font-mono">
-      <div className="text-blue-500 font-bold">
-        ━━━ Project Categories ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-      </div>
+      <CategoryHeader text="Project Categories" textColor="text-blue-500" />
+
       <div className="text-gray-200 mb-2">
         Type the following commands to explore each category:
       </div>
+
       <div className="flex flex-col space-y-1">
         {CATEGORIES.map(({ command, color, description }) => (
           <div key={command} className="flex items-center whitespace-nowrap">

@@ -14,7 +14,9 @@ export const fetchSubcategories = async (): Promise<Subcategory[]> => {
   const cached = cache.get<Subcategory[]>(cacheKey);
   if (cached) return cached;
 
-  const data = await fetchWithRetry<Subcategory[]>(`${API_URL}/subcategories/`);
+  const data = await fetchWithRetry<Subcategory[]>(
+    `${API_URL}/projects/subcategories/`
+  );
   cache.set(cacheKey, data);
   return data;
 };
@@ -32,7 +34,7 @@ export const getTechnologiesBySubcategory = async (
   if (cached) return cached;
 
   const data = await fetchWithRetry<Technology[]>(
-    `${API_URL}/subcategories/${subcategoryId}/technologies/`
+    `${API_URL}/subcategories/${subcategoryId}/projects/technologies/`
   );
   cache.set(cacheKey, data);
   return data;

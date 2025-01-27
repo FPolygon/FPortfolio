@@ -11,8 +11,8 @@ const cache = Cache.getInstance();
 const CATEGORY_MAP: { [key: string]: string } = {
   infrastructure: 'Infrastructure & Cloud',
   mlops: 'MLOps & Model Deployment',
-  data: 'Data Engineering',
-  ml: 'Machine Learning',
+  data: 'Data Engineering & Pipeline',
+  ml: 'Machine Learning & AI',
   tools: 'Programming & Tools',
 };
 
@@ -36,7 +36,12 @@ export const fetchProjectsByCategory = async (
   }
 
   const mappedCategory = CATEGORY_MAP[categoryName];
-  return fetchWithRetry<Project[]>(
-    `${API_URL}/projects/?category=${encodeURIComponent(mappedCategory)}`
-  );
+
+  const url = `${API_URL}/projects/projects/?category=${encodeURIComponent(
+    mappedCategory
+  )}`;
+  const data = await fetchWithRetry<Project[]>(url);
+
+  // Add a filter on the client side as well to ensure we only get relevant projects
+  return data.filter(project => project.category === mappedCategory);
 };

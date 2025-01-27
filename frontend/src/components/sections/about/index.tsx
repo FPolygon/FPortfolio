@@ -36,35 +36,35 @@ const INTERESTS = [
 export const AboutSection: React.FC<AboutSectionProps> = ({
   jobs,
   className = '',
-  onCommand = () => {}, // Add default value
+  onCommand = () => {},
 }) => {
   return (
-    <main className={`whitespace-pre-wrap ${className}`} role="main">
-      <ProfileHeader />
-      <InfoSection />
-      <BackgroundSection />
-
-      <div className="space-y-8">
-        <GridSection
-          title="CORE VALUES"
-          items={CORE_VALUES}
-          icon="▪"
-          variant="cyan"
-        />
-
-        <GridSection
-          title="INTERESTS"
-          items={INTERESTS}
-          icon="⚡"
-          variant="orange"
-        />
-
-        <EducationSection />
-        <WorkHistorySection jobs={jobs} />
-        <CommandSuggestions onCommandSelect={onCommand} />
+    <main
+      className={`whitespace-pre-wrap relative min-h-screen overflow-x-hidden ${className}`}
+      role="main"
+    >
+      <div className="max-w-full">
+        <ProfileHeader />
+        <InfoSection />
+        <BackgroundSection />
+        <div className="space-y-8 px-4">
+          <GridSection
+            title="CORE VALUES"
+            items={CORE_VALUES}
+            icon="▪"
+            variant="cyan"
+          />
+          <GridSection
+            title="INTERESTS"
+            items={INTERESTS}
+            icon="⚡"
+            variant="orange"
+          />
+          <EducationSection />
+          <WorkHistorySection jobs={jobs} />
+          <CommandSuggestions onCommandSelect={onCommand} />
+        </div>
       </div>
     </main>
   );
 };
-
-export default AboutSection;

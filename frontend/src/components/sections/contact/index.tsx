@@ -1,8 +1,8 @@
 import React from 'react';
-import { ContactHeader } from './ContactHeader';
 import { ContactItem } from './ContactItem';
 import { ContactFooter } from './ContactFooter';
 import { createContactItems } from './config';
+import CategoryHeader from '@/components/ui/CategoryHeader';
 import type { ContactSectionProps } from '@/types';
 
 // Main contact section component that assembles all sub-components
@@ -17,10 +17,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
   return (
     <section
-      className="whitespace-pre-wrap bg-gray-900/50 p-6 rounded-lg"
+      className="whitespace-pre-wrap bg-gray-900/50 rounded-lg"
       aria-labelledby="contact-heading"
     >
-      <ContactHeader />
+      <CategoryHeader text="Contact" textColor="text-blue-400" />
+
       <div className="grid grid-cols-1 gap-3">
         {contactItems.map(item => (
           <ContactItem key={item.label} {...item} />
